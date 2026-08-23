@@ -61,36 +61,61 @@ fun Laskin(modifier: Modifier = Modifier) {
     val lasku = remember { mutableListOf<String>() }
     var numerot  by remember { mutableStateOf("") }
     var vas  by remember { mutableStateOf(0) }
+    var merkkiindex = 0
+
+    if ("" in lasku) {
+        var tyhjandex = lasku.indexOf("")
+        lasku.removeAt(tyhjandex)
+    }
 
     if ("=" in lasku) {
         println(lasku)
-        //for ((index, value) in lasku.withIndex()) {
-            if ("*" in lasku){
-                var merkkiindex = lasku.indexOf("*")
-                vas = lasku[merkkiindex - 1].toInt() * lasku[merkkiindex + 1].toInt()
-                laskuTeksti = vas.toString()
+        if ("*" in lasku) {
+            merkkiindex = lasku.indexOf("*")
+            vas = lasku[merkkiindex - 1].toInt() * lasku[merkkiindex + 1].toInt()
+            lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
+            if (vas.toString() !in lasku) {
+                lasku.add(merkkiindex , vas.toString())
             }
-            if ("/" in lasku){
-                var merkkiindex = lasku.indexOf("/")
-                vas = lasku[merkkiindex - 1].toInt() / lasku[merkkiindex + 1].toInt()
-                laskuTeksti = vas.toString()
+            println(lasku)
+            laskuTeksti = vas.toString()
+        }
+        if ("/" in lasku) {
+            merkkiindex = lasku.indexOf("/")
+            vas = lasku[merkkiindex - 1].toInt() / lasku[merkkiindex + 1].toInt()
+            lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
+            if (vas.toString() !in lasku) {
+                lasku.add(merkkiindex , vas.toString())
             }
-            if ("+" in lasku){
-                var merkkiindex = lasku.indexOfFirst { it.startsWith("+") }
-                vas = lasku[merkkiindex - 1].toInt() + lasku[merkkiindex + 1].toInt()
-                lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
-                if (vas.toString() !in lasku) {
-                    lasku.add(merkkiindex , vas.toString())
-                }
-                println(lasku)
-                laskuTeksti = vas.toString()
+            println(lasku)
+            laskuTeksti = vas.toString()
+        }
+        if ("+" in lasku) {
+            merkkiindex = lasku.indexOfFirst { it.startsWith("+") }
+            vas = lasku[merkkiindex - 1].toInt() + lasku[merkkiindex + 1].toInt()
+            lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
+            if (vas.toString() !in lasku) {
+                lasku.add(merkkiindex , vas.toString())
             }
-            if ("-" in lasku){
-                var merkkiindex = lasku.indexOf("-")
-                vas = lasku[merkkiindex - 1].toInt() - lasku[merkkiindex + 1].toInt()
-                laskuTeksti = vas.toString()
+            println(lasku)
+            laskuTeksti = vas.toString()
+        }
+        if ("-" in lasku){
+            merkkiindex = lasku.indexOf("-")
+            vas = lasku[merkkiindex - 1].toInt() - lasku[merkkiindex + 1].toInt()
+            lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
+            if (vas.toString() !in lasku) {
+                lasku.add(merkkiindex , vas.toString())
             }
-        //}
+            println(lasku)
+            laskuTeksti = vas.toString()
+        }
+        println(lasku)
+    }
+
+    if ("=" in lasku && "+" !in lasku && "-" !in lasku && "/" !in lasku && "*" !in lasku) {
+        var yhtindex = lasku.indexOf("=")
+        lasku.removeAt(yhtindex)
     }
 
     Column(
