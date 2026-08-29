@@ -66,60 +66,82 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Laskin(modifier: Modifier = Modifier) {
     var laskuTeksti by remember { mutableStateOf("") }
-    val lasku = remember { mutableListOf<String>() }
+    var lasku = remember { mutableListOf<String>() }
     var numerot  by remember { mutableStateOf("") }
     var vas  by remember { mutableIntStateOf(0) }
     var merkkiindex = 0
+    var merkkiindex_vas = 0
 
     if ("" in lasku) {
         val tyhjandex = lasku.indexOf("")
         lasku.removeAt(tyhjandex)
     }
-
-    if ("=" in lasku) {
-        println(lasku)
-        if ("*" in lasku) {
-            merkkiindex = lasku.indexOf("*")
-            vas = lasku[merkkiindex - 1].toInt() * lasku[merkkiindex + 1].toInt()
-            lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
-            if (vas.toString() !in lasku) {
-                lasku.add(merkkiindex , vas.toString())
+    while (lasku.size > 1) {
+        if ("=" in lasku) {
+            val yhtindex = lasku.indexOf("=")
+            lasku.removeAt(yhtindex)
+            if ("*" in lasku) {
+                merkkiindex = lasku.indexOf("*")
+                val vas_k = lasku[merkkiindex - 1].toInt() * lasku[merkkiindex + 1].toInt()
+                lasku.removeAt(merkkiindex + 1)
+                lasku.removeAt(merkkiindex - 1)
+                if (vas.toString() !in lasku) {
+                    merkkiindex_vas = lasku.indexOf(vas.toString())
+                    if (merkkiindex_vas == -1) {
+                        lasku.add(merkkiindex,vas_k.toString())
+                    } else {
+                        lasku[merkkiindex_vas] = vas_k.toString()
+                    }
+                }
+                laskuTeksti = vas_k.toString()
+                vas = vas_k
+            }
+            if ("/" in lasku) {
+                merkkiindex = lasku.indexOf("/")
+                vas = lasku[merkkiindex - 1].toInt() / lasku[merkkiindex + 1].toInt()
+                lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
+                if (vas.toString() !in lasku) {
+                    lasku.add(vas.toString())
+                }
+                laskuTeksti = vas.toString()
+            }
+            if ("+" in lasku) {
+                merkkiindex = lasku.indexOf("+")
+                val vas_p = lasku[merkkiindex - 1].toInt() + lasku[merkkiindex + 1].toInt()
+                println(lasku)
+                lasku.removeAt(merkkiindex + 1)
+                lasku.removeAt(merkkiindex - 1)
+                if (vas.toString() !in lasku) {
+                    merkkiindex_vas = lasku.indexOf(vas.toString())
+                    println(merkkiindex_vas)
+                    println(vas)
+                    if (merkkiindex_vas == -1) {
+                        lasku.add(merkkiindex,vas_p.toString())
+                    } else {
+                        lasku[merkkiindex_vas] = vas_p.toString()
+                    }
+                }
+                laskuTeksti = vas_p.toString()
+                vas = vas_p
+            }
+            if ("-" in lasku){
+                merkkiindex = lasku.indexOf("-")
+                vas = lasku[merkkiindex - 1].toInt() - lasku[merkkiindex + 1].toInt()
+                lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
+                if (vas.toString() !in lasku) {
+                    lasku.add(vas.toString())
+                    //lasku.add(merkkiindex , vas.toString())
+                }
+                println(lasku)
+                laskuTeksti = vas.toString()
             }
             println(lasku)
-            laskuTeksti = vas.toString()
         }
-        if ("/" in lasku) {
-            merkkiindex = lasku.indexOf("/")
-            vas = lasku[merkkiindex - 1].toInt() / lasku[merkkiindex + 1].toInt()
-            lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
-            if (vas.toString() !in lasku) {
-                lasku.add(merkkiindex , vas.toString())
-            }
-            println(lasku)
-            laskuTeksti = vas.toString()
+        if (lasku.size == 1) {
+            break
         }
-        if ("+" in lasku) {
-            merkkiindex = lasku.indexOfFirst { it.startsWith("+") }
-            vas = lasku[merkkiindex - 1].toInt() + lasku[merkkiindex + 1].toInt()
-            lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
-            if (vas.toString() !in lasku) {
-                lasku.add(merkkiindex , vas.toString())
-            }
-            println(lasku)
-            laskuTeksti = vas.toString()
-        }
-        if ("-" in lasku){
-            merkkiindex = lasku.indexOf("-")
-            vas = lasku[merkkiindex - 1].toInt() - lasku[merkkiindex + 1].toInt()
-            lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
-            if (vas.toString() !in lasku) {
-                lasku.add(merkkiindex , vas.toString())
-            }
-            println(lasku)
-            laskuTeksti = vas.toString()
-        }
-        println(lasku)
     }
+
 
     if ("=" in lasku && "+" !in lasku && "-" !in lasku && "/" !in lasku && "*" !in lasku) {
         val yhtindex = lasku.indexOf("=")
@@ -412,7 +434,7 @@ fun Laskin(modifier: Modifier = Modifier) {
                 }
             }
 
-            // , and =
+            // , 0 and =
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -432,7 +454,19 @@ fun Laskin(modifier: Modifier = Modifier) {
                 ) {
                     Text(",", color = Color.White, fontSize = 25.sp)
                 }
-
+                Button(
+                    onClick = {
+                        laskuTeksti += "0"
+                        numerot += "0"
+                    },
+                    modifier = Modifier.weight(1f).height(70.dp),
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF292D33)
+                    )
+                ) {
+                    Text("0", color = Color.White, fontSize = 25.sp)
+                }
                 Button(
                     onClick = {
                         if ("=" in laskuTeksti || "=" in lasku) {
