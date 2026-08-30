@@ -76,427 +76,466 @@ fun Laskin(modifier: Modifier = Modifier) {
         val tyhjandex = lasku.indexOf("")
         lasku.removeAt(tyhjandex)
     }
-    while (lasku.size > 1) {
-        if ("=" in lasku) {
-            val yhtindex = lasku.indexOf("=")
-            lasku.removeAt(yhtindex)
+    if ("=" in lasku) {
+        while (lasku.size > 1) {
+            if ("=" in lasku) {
+                val yhtindex = lasku.indexOf("=")
+                lasku.removeAt(yhtindex)
+            }
             if ("*" in lasku) {
                 merkkiindex = lasku.indexOf("*")
                 val vas_k = lasku[merkkiindex - 1].toInt() * lasku[merkkiindex + 1].toInt()
-                lasku.removeAt(merkkiindex + 1)
-                lasku.removeAt(merkkiindex - 1)
-                if (vas.toString() !in lasku) {
-                    merkkiindex_vas = lasku.indexOf(vas.toString())
-                    if (merkkiindex_vas == -1) {
-                        lasku.add(merkkiindex,vas_k.toString())
-                    } else {
-                        lasku[merkkiindex_vas] = vas_k.toString()
-                    }
-                }
-                laskuTeksti = vas_k.toString()
-                vas = vas_k
-            }
-            if ("/" in lasku) {
-                merkkiindex = lasku.indexOf("/")
-                vas = lasku[merkkiindex - 1].toInt() / lasku[merkkiindex + 1].toInt()
-                lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
-                if (vas.toString() !in lasku) {
-                    lasku.add(vas.toString())
-                }
-                laskuTeksti = vas.toString()
-            }
-            if ("+" in lasku) {
-                merkkiindex = lasku.indexOf("+")
-                val vas_p = lasku[merkkiindex - 1].toInt() + lasku[merkkiindex + 1].toInt()
                 println(lasku)
-                lasku.removeAt(merkkiindex + 1)
-                lasku.removeAt(merkkiindex - 1)
                 if (vas.toString() !in lasku) {
                     merkkiindex_vas = lasku.indexOf(vas.toString())
                     println(merkkiindex_vas)
                     println(vas)
                     if (merkkiindex_vas == -1) {
-                        lasku.add(merkkiindex,vas_p.toString())
+                        lasku[merkkiindex] = vas_k.toString()
+                        lasku.removeAt(merkkiindex + 1)
+                        lasku.removeAt(merkkiindex - 1)
                     } else {
-                        lasku[merkkiindex_vas] = vas_p.toString()
+                        lasku[merkkiindex_vas] = vas_k.toString()
+                        lasku.removeAt(merkkiindex + 1)
+                        lasku.removeAt(merkkiindex - 1)
                     }
                 }
+                println(lasku)
+                laskuTeksti = vas_k.toString()
+                vas = vas_k
+            }
+            println(lasku)
+            if ("/" in lasku) {
+                merkkiindex = lasku.indexOf("/")
+                val vas_j = lasku[merkkiindex - 1].toInt() / lasku[merkkiindex + 1].toInt()
+                println(lasku)
+                if (vas.toString() !in lasku) {
+                    merkkiindex_vas = lasku.indexOf(vas.toString())
+                    println(merkkiindex_vas)
+                    println(vas)
+                    if (merkkiindex_vas == -1) {
+                        lasku[merkkiindex] = vas_j.toString()
+                        lasku.removeAt(merkkiindex + 1)
+                        lasku.removeAt(merkkiindex - 1)
+                    } else {
+                        lasku[merkkiindex_vas] = vas_j.toString()
+                        lasku.removeAt(merkkiindex + 1)
+                        lasku.removeAt(merkkiindex - 1)
+                    }
+                }
+                println(lasku)
+                laskuTeksti = vas_j.toString()
+                vas = vas_j
+            }
+            if ("+" in lasku) {
+                merkkiindex = lasku.indexOf("+")
+                val vas_p = lasku[merkkiindex - 1].toInt() + lasku[merkkiindex + 1].toInt()
+                println(lasku)
+                if (vas.toString() !in lasku) {
+                    merkkiindex_vas = lasku.indexOf(vas.toString())
+                    println(merkkiindex_vas)
+                    println(vas)
+                    if (merkkiindex_vas == -1) {
+                        lasku[merkkiindex] = vas_p.toString()
+                        lasku.removeAt(merkkiindex + 1)
+                        lasku.removeAt(merkkiindex - 1)
+                    } else {
+                        lasku[merkkiindex_vas] = vas_p.toString()
+                        lasku.removeAt(merkkiindex + 1)
+                        lasku.removeAt(merkkiindex - 1)
+                    }
+                }
+                println(lasku)
                 laskuTeksti = vas_p.toString()
                 vas = vas_p
             }
             if ("-" in lasku){
                 merkkiindex = lasku.indexOf("-")
-                vas = lasku[merkkiindex - 1].toInt() - lasku[merkkiindex + 1].toInt()
-                lasku.subList(merkkiindex - 1, merkkiindex + 1).clear()
+                val vas_m = lasku[merkkiindex - 1].toInt() - lasku[merkkiindex + 1].toInt()
+                println(lasku)
                 if (vas.toString() !in lasku) {
-                    lasku.add(vas.toString())
-                    //lasku.add(merkkiindex , vas.toString())
+                    merkkiindex_vas = lasku.indexOf(vas.toString())
+                    println(merkkiindex_vas)
+                    println(vas)
+                    if (merkkiindex_vas == -1) {
+                        lasku[merkkiindex] = vas_m.toString()
+                        lasku.removeAt(merkkiindex + 1)
+                        lasku.removeAt(merkkiindex - 1)
+                    } else {
+                        lasku[merkkiindex_vas] = vas_m.toString()
+                        lasku.removeAt(merkkiindex + 1)
+                        lasku.removeAt(merkkiindex - 1)
+                    }
                 }
                 println(lasku)
-                laskuTeksti = vas.toString()
+                laskuTeksti = vas_m.toString()
+                vas = vas_m
             }
             println(lasku)
-        }
-        if (lasku.size == 1) {
-            break
+            if (lasku.size == 1) {
+                break
+            }
         }
     }
 
 
-    if ("=" in lasku && "+" !in lasku && "-" !in lasku && "/" !in lasku && "*" !in lasku) {
-        val yhtindex = lasku.indexOf("=")
-        lasku.removeAt(yhtindex)
-    }
+        if ("=" in lasku && "+" !in lasku && "-" !in lasku && "/" !in lasku && "*" !in lasku) {
+            val yhtindex = lasku.indexOf("=")
+            lasku.removeAt(yhtindex)
+        }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
         Column(
             modifier = Modifier
-                .width(360.dp)
-                .clip(RoundedCornerShape(32.dp))
-                .background(Color(0xFF202328))
-                .padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-
-            // DISPLAY
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(110.dp)
-                    .clip(RoundedCornerShape(24.dp))
-                    .background(Color(0xFF0B0D0F))
-                    .padding(horizontal = 20.dp),
-                contentAlignment = Alignment.CenterEnd
+                    .width(360.dp)
+                    .clip(RoundedCornerShape(32.dp))
+                    .background(Color(0xFF202328))
+                    .padding(20.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Text(
-                    text = if (laskuTeksti.isEmpty()) "0" else laskuTeksti,
-                    color = Color.White,
-                    fontSize = 36.sp,
-                    fontWeight = FontWeight.Light,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // C / /
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    onClick = {
-                        laskuTeksti = ""
-                        lasku.clear()
-                        numerot = ""
-                    },
+                // DISPLAY
+                Box(
                     modifier = Modifier
-                        .weight(1f)
-                        .height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF3A3F46)
-                    )
+                        .fillMaxWidth()
+                        .height(110.dp)
+                        .clip(RoundedCornerShape(24.dp))
+                        .background(Color(0xFF0B0D0F))
+                        .padding(horizontal = 20.dp),
+                    contentAlignment = Alignment.CenterEnd
                 ) {
                     Text(
-                        "C",
+                        text = laskuTeksti,
                         color = Color.White,
-                        fontSize = 23.sp
+                        fontSize = 36.sp,
+                        fontWeight = FontWeight.Light,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
 
-                Button(
-                    onClick = {
-                        laskuTeksti += "/"
-                        lasku.add("/")
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // C / /
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text(
-                        "/",
-                        color = Color.White,
-                        fontSize = 23.sp
-                    )
+                    Button(
+                        onClick = {
+                            laskuTeksti = ""
+                            lasku.clear()
+                            numerot = ""
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF3A3F46)
+                        )
+                    ) {
+                        Text(
+                            "C",
+                            color = Color.White,
+                            fontSize = 23.sp
+                        )
+                    }
+
+                    Button(
+                        onClick = {
+                            laskuTeksti += "/"
+                            lasku.add(numerot)
+                            numerot = ""
+                            lasku.add("/")
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text(
+                            "/",
+                            color = Color.White,
+                            fontSize = 23.sp
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.weight(2f))
                 }
 
-                Spacer(modifier = Modifier.weight(2f))
-            }
-
-            // 7 8 9 *
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    onClick = {
-                        laskuTeksti += "7"
-                        numerot += "7"
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
+                // 7 8 9 *
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text("7", color = Color.White, fontSize = 25.sp)
+                    Button(
+                        onClick = {
+                            laskuTeksti += "7"
+                            numerot += "7"
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text("7", color = Color.White, fontSize = 25.sp)
+                    }
+
+                    Button(
+                        onClick = {
+                            laskuTeksti += "8"
+                            numerot += "8"
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text("8", color = Color.White, fontSize = 25.sp)
+                    }
+
+                    Button(
+                        onClick = {
+                            laskuTeksti += "9"
+                            numerot += "9"
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text("9", color = Color.White, fontSize = 25.sp)
+                    }
+
+                    Button(
+                        onClick = {
+                            laskuTeksti += "*"
+                            lasku.add(numerot)
+                            numerot = ""
+                            lasku.add("*")
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFF8A00)
+                        )
+                    ) {
+                        Text("*", color = Color.White, fontSize = 25.sp)
+                    }
                 }
 
-                Button(
-                    onClick = {
-                        laskuTeksti += "8"
-                        numerot += "8"
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
+                // 4 5 6 -
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text("8", color = Color.White, fontSize = 25.sp)
+                    Button(
+                        onClick = {
+                            laskuTeksti += "4"
+                            numerot += "4"
+                        },
+                        modifier = Modifier.weight(1f).height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text("4", color = Color.White, fontSize = 25.sp)
+                    }
+
+                    Button(
+                        onClick = {
+                            laskuTeksti += "5"
+                            numerot += "5"
+                        },
+                        modifier = Modifier.weight(1f).height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text("5", color = Color.White, fontSize = 25.sp)
+                    }
+
+                    Button(
+                        onClick = {
+                            laskuTeksti += "6"
+                            numerot += "6"
+                        },
+                        modifier = Modifier.weight(1f).height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text("6", color = Color.White, fontSize = 25.sp)
+                    }
+
+                    Button(
+                        onClick = {
+                            laskuTeksti += "-"
+                            lasku.add(numerot)
+                            numerot = ""
+                            lasku.add("-")
+                        },
+                        modifier = Modifier.weight(1f).height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFF8A00)
+                        )
+                    ) {
+                        Text("-", color = Color.White, fontSize = 25.sp)
+                    }
                 }
 
-                Button(
-                    onClick = {
-                        laskuTeksti += "9"
-                        numerot += "9"
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
+                // 1 2 3 +
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text("9", color = Color.White, fontSize = 25.sp)
+                    Button(
+                        onClick = {
+                            laskuTeksti += "1"
+                            numerot += "1"
+                        },
+                        modifier = Modifier.weight(1f).height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text("1", color = Color.White, fontSize = 25.sp)
+                    }
+
+                    Button(
+                        onClick = {
+                            laskuTeksti += "2"
+                            numerot += "2"
+                        },
+                        modifier = Modifier.weight(1f).height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text("2", color = Color.White, fontSize = 25.sp)
+                    }
+
+                    Button(
+                        onClick = {
+                            laskuTeksti += "3"
+                            numerot += "3"
+                        },
+                        modifier = Modifier.weight(1f).height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text("3", color = Color.White, fontSize = 25.sp)
+                    }
+
+                    Button(
+                        onClick = {
+                            laskuTeksti += "+"
+                            lasku.add(numerot)
+                            numerot = ""
+                            lasku.add("+")
+                        },
+                        modifier = Modifier.weight(1f).height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFF8A00)
+                        )
+                    ) {
+                        Text("+", color = Color.White, fontSize = 25.sp)
+                    }
                 }
 
-                Button(
-                    onClick = {
-                        laskuTeksti += "*"
-                        lasku.add(numerot)
-                        numerot = ""
-                        lasku.add("*")
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFF8A00)
-                    )
+                // , 0 and =
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text("*", color = Color.White, fontSize = 25.sp)
-                }
-            }
+                    Button(
+                        onClick = {
+                            laskuTeksti += ","
+                            lasku.add(",")
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text(",", color = Color.White, fontSize = 25.sp)
+                    }
+                    Button(
+                        onClick = {
+                            laskuTeksti += "0"
+                            numerot += "0"
+                        },
+                        modifier = Modifier.weight(1f).height(70.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF292D33)
+                        )
+                    ) {
+                        Text("0", color = Color.White, fontSize = 25.sp)
+                    }
+                    Button(
+                        onClick = {
+                            if ("=" in laskuTeksti || "=" in lasku) {
+                                return@Button
+                            }
 
-            // 4 5 6 -
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    onClick = {
-                        laskuTeksti += "4"
-                        numerot += "4"
-                    },
-                    modifier = Modifier.weight(1f).height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
-                ) {
-                    Text("4", color = Color.White, fontSize = 25.sp)
-                }
-
-                Button(
-                    onClick = {
-                        laskuTeksti += "5"
-                        numerot += "5"
-                    },
-                    modifier = Modifier.weight(1f).height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
-                ) {
-                    Text("5", color = Color.White, fontSize = 25.sp)
-                }
-
-                Button(
-                    onClick = {
-                        laskuTeksti += "6"
-                        numerot += "6"
-                    },
-                    modifier = Modifier.weight(1f).height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
-                ) {
-                    Text("6", color = Color.White, fontSize = 25.sp)
-                }
-
-                Button(
-                    onClick = {
-                        laskuTeksti += "-"
-                        lasku.add(numerot)
-                        numerot = ""
-                        lasku.add("-")
-                    },
-                    modifier = Modifier.weight(1f).height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFF8A00)
-                    )
-                ) {
-                    Text("-", color = Color.White, fontSize = 25.sp)
-                }
-            }
-
-            // 1 2 3 +
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    onClick = {
-                        laskuTeksti += "1"
-                        numerot += "1"
-                    },
-                    modifier = Modifier.weight(1f).height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
-                ) {
-                    Text("1", color = Color.White, fontSize = 25.sp)
-                }
-
-                Button(
-                    onClick = {
-                        laskuTeksti += "2"
-                        numerot += "2"
-                    },
-                    modifier = Modifier.weight(1f).height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
-                ) {
-                    Text("2", color = Color.White, fontSize = 25.sp)
-                }
-
-                Button(
-                    onClick = {
-                        laskuTeksti += "3"
-                        numerot += "3"
-                    },
-                    modifier = Modifier.weight(1f).height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
-                ) {
-                    Text("3", color = Color.White, fontSize = 25.sp)
-                }
-
-                Button(
-                    onClick = {
-                        laskuTeksti += "+"
-                        lasku.add(numerot)
-                        numerot = ""
-                        lasku.add("+")
-                    },
-                    modifier = Modifier.weight(1f).height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFF8A00)
-                    )
-                ) {
-                    Text("+", color = Color.White, fontSize = 25.sp)
-                }
-            }
-
-            // , 0 and =
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    onClick = {
-                        laskuTeksti += ","
-                        lasku.add(",")
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
-                ) {
-                    Text(",", color = Color.White, fontSize = 25.sp)
-                }
-                Button(
-                    onClick = {
-                        laskuTeksti += "0"
-                        numerot += "0"
-                    },
-                    modifier = Modifier.weight(1f).height(70.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF292D33)
-                    )
-                ) {
-                    Text("0", color = Color.White, fontSize = 25.sp)
-                }
-                Button(
-                    onClick = {
-                        if ("=" in laskuTeksti || "=" in lasku) {
-                            return@Button
-                        }
-
-                        laskuTeksti += "="
-                        lasku.add(numerot)
-                        numerot = ""
-                        lasku.add("=")
-                    },
-                    modifier = Modifier
-                        .weight(3f)
-                        .height(70.dp),
-                    shape = RoundedCornerShape(40.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFF8A00)
-                    )
-                ) {
-                    Text(
-                        "=",
-                        color = Color.White,
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.Light
-                    )
+                            laskuTeksti += "="
+                            lasku.add(numerot)
+                            numerot = ""
+                            lasku.add("=")
+                        },
+                        modifier = Modifier
+                            .weight(3f)
+                            .height(70.dp),
+                        shape = RoundedCornerShape(40.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFF8A00)
+                        )
+                    ) {
+                        Text(
+                            "=",
+                            color = Color.White,
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Light
+                        )
+                    }
                 }
             }
         }
     }
-}
+
 
 
 @Preview(showBackground = true)
