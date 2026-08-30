@@ -77,39 +77,49 @@ fun Laskin(modifier: Modifier = Modifier) {
         lasku.removeAt(tyhjandex)
     }
     if ("=" in lasku) {
+        println(lasku)
         while (lasku.size > 1) {
             if ("=" in lasku) {
                 val yhtindex = lasku.indexOf("=")
                 lasku.removeAt(yhtindex)
             }
-            if ("*" in lasku) {
-                merkkiindex = lasku.indexOf("*")
-                val vas_k = lasku[merkkiindex - 1].toInt() * lasku[merkkiindex + 1].toInt()
-                println(lasku)
-                if (vas.toString() !in lasku) {
+            println(lasku)
+            if ("*" in lasku || "/" in lasku) {
+                if ("*" in lasku && lasku.indexOf("*") <  lasku.indexOf("/") || lasku.indexOf("/") == -1) {
+                    merkkiindex = lasku.indexOf("*")
+                    val vas_k = lasku[merkkiindex - 1].toInt() * lasku[merkkiindex + 1].toInt()
+                    println(lasku)
+                    println(vas)
+                    // tässä ehdossa vika
+                    //if (vas_k.toString() !in lasku) {
                     merkkiindex_vas = lasku.indexOf(vas.toString())
-                    println(merkkiindex_vas)
+                    println("THE" + merkkiindex_vas.toString())
                     println(vas)
                     if (merkkiindex_vas == -1) {
                         lasku[merkkiindex] = vas_k.toString()
                         lasku.removeAt(merkkiindex + 1)
                         lasku.removeAt(merkkiindex - 1)
                     } else {
-                        lasku[merkkiindex_vas] = vas_k.toString()
+                        lasku[merkkiindex] = vas_k.toString()
                         lasku.removeAt(merkkiindex + 1)
                         lasku.removeAt(merkkiindex - 1)
                     }
+                    //}
+                    println("LASKUU")
+                    println(lasku)
+                    laskuTeksti = vas_k.toString()
+                    vas = vas_k
+                    if (lasku.size == 1) {
+                        break
+                    }
+                    continue
                 }
                 println(lasku)
-                laskuTeksti = vas_k.toString()
-                vas = vas_k
-            }
-            println(lasku)
-            if ("/" in lasku) {
-                merkkiindex = lasku.indexOf("/")
-                val vas_j = lasku[merkkiindex - 1].toInt() / lasku[merkkiindex + 1].toInt()
-                println(lasku)
-                if (vas.toString() !in lasku) {
+                if ("/" in lasku && lasku.indexOf("/") <  lasku.indexOf("*") || lasku.indexOf("*") == -1) {
+                    merkkiindex = lasku.indexOf("/")
+                    val vas_j = lasku[merkkiindex - 1].toInt() / lasku[merkkiindex + 1].toInt()
+                    println(lasku)
+                    //if (vas_j.toString() !in lasku) {
                     merkkiindex_vas = lasku.indexOf(vas.toString())
                     println(merkkiindex_vas)
                     println(vas)
@@ -118,58 +128,72 @@ fun Laskin(modifier: Modifier = Modifier) {
                         lasku.removeAt(merkkiindex + 1)
                         lasku.removeAt(merkkiindex - 1)
                     } else {
-                        lasku[merkkiindex_vas] = vas_j.toString()
+                        lasku[merkkiindex] = vas_j.toString()
                         lasku.removeAt(merkkiindex + 1)
                         lasku.removeAt(merkkiindex - 1)
                     }
+                    //}
+                    println(lasku)
+                    laskuTeksti = vas_j.toString()
+                    vas = vas_j
+                    if (lasku.size == 1) {
+                        break
+                    }
+                    continue
                 }
-                println(lasku)
-                laskuTeksti = vas_j.toString()
-                vas = vas_j
             }
+
             if ("+" in lasku) {
                 merkkiindex = lasku.indexOf("+")
                 val vas_p = lasku[merkkiindex - 1].toInt() + lasku[merkkiindex + 1].toInt()
                 println(lasku)
-                if (vas.toString() !in lasku) {
-                    merkkiindex_vas = lasku.indexOf(vas.toString())
-                    println(merkkiindex_vas)
-                    println(vas)
-                    if (merkkiindex_vas == -1) {
-                        lasku[merkkiindex] = vas_p.toString()
-                        lasku.removeAt(merkkiindex + 1)
-                        lasku.removeAt(merkkiindex - 1)
-                    } else {
-                        lasku[merkkiindex_vas] = vas_p.toString()
-                        lasku.removeAt(merkkiindex + 1)
-                        lasku.removeAt(merkkiindex - 1)
-                    }
+                //if (vas_p.toString() !in lasku) {
+                merkkiindex_vas = lasku.indexOf(vas.toString())
+                println(merkkiindex_vas)
+                println(vas)
+                if (merkkiindex_vas == -1) {
+                    lasku[merkkiindex] = vas_p.toString()
+                    lasku.removeAt(merkkiindex + 1)
+                    lasku.removeAt(merkkiindex - 1)
+                } else {
+                    lasku[merkkiindex] = vas_p.toString()
+                    lasku.removeAt(merkkiindex + 1)
+                    lasku.removeAt(merkkiindex - 1)
                 }
+                //}
                 println(lasku)
                 laskuTeksti = vas_p.toString()
                 vas = vas_p
+                if (lasku.size == 1) {
+                    break
+                }
+                continue
             }
             if ("-" in lasku){
                 merkkiindex = lasku.indexOf("-")
                 val vas_m = lasku[merkkiindex - 1].toInt() - lasku[merkkiindex + 1].toInt()
                 println(lasku)
-                if (vas.toString() !in lasku) {
-                    merkkiindex_vas = lasku.indexOf(vas.toString())
-                    println(merkkiindex_vas)
-                    println(vas)
-                    if (merkkiindex_vas == -1) {
-                        lasku[merkkiindex] = vas_m.toString()
-                        lasku.removeAt(merkkiindex + 1)
-                        lasku.removeAt(merkkiindex - 1)
-                    } else {
-                        lasku[merkkiindex_vas] = vas_m.toString()
-                        lasku.removeAt(merkkiindex + 1)
-                        lasku.removeAt(merkkiindex - 1)
-                    }
+                //if (vas_m.toString() !in lasku) {
+                merkkiindex_vas = lasku.indexOf(vas.toString())
+                println(merkkiindex_vas)
+                println(vas)
+                if (merkkiindex_vas == -1) {
+                    lasku[merkkiindex] = vas_m.toString()
+                    lasku.removeAt(merkkiindex + 1)
+                    lasku.removeAt(merkkiindex - 1)
+                } else {
+                    lasku[merkkiindex] = vas_m.toString()
+                    lasku.removeAt(merkkiindex + 1)
+                    lasku.removeAt(merkkiindex - 1)
                 }
+                //}
                 println(lasku)
                 laskuTeksti = vas_m.toString()
                 vas = vas_m
+                if (lasku.size == 1) {
+                    break
+                }
+                continue
             }
             println(lasku)
             if (lasku.size == 1) {
@@ -231,6 +255,7 @@ fun Laskin(modifier: Modifier = Modifier) {
                             laskuTeksti = ""
                             lasku.clear()
                             numerot = ""
+                            vas = 0
                         },
                         modifier = Modifier
                             .weight(1f)
