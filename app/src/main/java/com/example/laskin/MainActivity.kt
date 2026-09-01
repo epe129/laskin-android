@@ -43,6 +43,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -68,7 +69,7 @@ fun Laskin(modifier: Modifier = Modifier) {
     var laskuTeksti by remember { mutableStateOf("") }
     var lasku = remember { mutableListOf<String>() }
     var numerot  by remember { mutableStateOf("") }
-    var vas  by remember { mutableIntStateOf(0) }
+    var vas  by remember { mutableFloatStateOf(0.0f) }
     var merkkiindex = 0
     var merkkiindex_vas = 0
 
@@ -87,7 +88,7 @@ fun Laskin(modifier: Modifier = Modifier) {
             if ("*" in lasku || "/" in lasku) {
                 if ("*" in lasku && lasku.indexOf("*") <  lasku.indexOf("/") || lasku.indexOf("/") == -1) {
                     merkkiindex = lasku.indexOf("*")
-                    val vas_k = lasku[merkkiindex - 1].toInt() * lasku[merkkiindex + 1].toInt()
+                    val vas_k = lasku[merkkiindex - 1].toFloat() * lasku[merkkiindex + 1].toFloat()
                     println(lasku)
                     println(vas)
                     // tässä ehdossa vika
@@ -117,7 +118,7 @@ fun Laskin(modifier: Modifier = Modifier) {
                 println(lasku)
                 if ("/" in lasku && lasku.indexOf("/") <  lasku.indexOf("*") || lasku.indexOf("*") == -1) {
                     merkkiindex = lasku.indexOf("/")
-                    val vas_j = lasku[merkkiindex - 1].toInt() / lasku[merkkiindex + 1].toInt()
+                    val vas_j = lasku[merkkiindex - 1].toFloat() / lasku[merkkiindex + 1].toFloat()
                     println(lasku)
                     //if (vas_j.toString() !in lasku) {
                     merkkiindex_vas = lasku.indexOf(vas.toString())
@@ -145,7 +146,7 @@ fun Laskin(modifier: Modifier = Modifier) {
 
             if ("+" in lasku) {
                 merkkiindex = lasku.indexOf("+")
-                val vas_p = lasku[merkkiindex - 1].toInt() + lasku[merkkiindex + 1].toInt()
+                val vas_p = lasku[merkkiindex - 1].toFloat() + lasku[merkkiindex + 1].toFloat()
                 println(lasku)
                 //if (vas_p.toString() !in lasku) {
                 merkkiindex_vas = lasku.indexOf(vas.toString())
@@ -171,7 +172,7 @@ fun Laskin(modifier: Modifier = Modifier) {
             }
             if ("-" in lasku){
                 merkkiindex = lasku.indexOf("-")
-                val vas_m = lasku[merkkiindex - 1].toInt() - lasku[merkkiindex + 1].toInt()
+                val vas_m = lasku[merkkiindex - 1].toFloat() - lasku[merkkiindex + 1].toFloat()
                 println(lasku)
                 //if (vas_m.toString() !in lasku) {
                 merkkiindex_vas = lasku.indexOf(vas.toString())
@@ -255,7 +256,7 @@ fun Laskin(modifier: Modifier = Modifier) {
                             laskuTeksti = ""
                             lasku.clear()
                             numerot = ""
-                            vas = 0
+                            vas = 0.0f
                         },
                         modifier = Modifier
                             .weight(1f)
@@ -505,7 +506,7 @@ fun Laskin(modifier: Modifier = Modifier) {
                     Button(
                         onClick = {
                             laskuTeksti += ","
-                            lasku.add(",")
+                            numerot += "."
                         },
                         modifier = Modifier
                             .weight(1f)
